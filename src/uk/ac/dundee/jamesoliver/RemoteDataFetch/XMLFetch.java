@@ -62,7 +62,7 @@ public class XMLFetch extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, java.net.MalformedURLException
 	{
-		String webServiceURL = "http://api.wolframalpha.com/v2/query?input=comet%20PANSTARRS%20from%20dundee%20scotland&appid=8YE6TK-X5TAH287JP&format=html,plaintext";
+		String webServiceURL = "http://api.wolframalpha.com/v2/query?input=comet%20PANSTARRS%20from%20dundee%20scotland&appid=8YE6TK-X5TAH287JP&format=image,plaintext";
 		
 		String returnedXML;
 		

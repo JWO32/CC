@@ -44,20 +44,52 @@ YUI().use("io-base", "datasource-get", "datatype-xml", "dataschema-xml", "node",
             {
                 success:function(id, o) 
                 {
-                	var xmlDoc =  Y.DataType.XML.parse(o.responseText,
-                			schema = {
-                			resultListLocator: "//queryresult/pod",
-                			resultFields: [{key: "text", locator: "plaintext"}]
-                			}, 
-                	data_out = Y.DataSchema.XML.apply(schema, xmlDoc));
+                	// Can't get a YUI XML datascheme to automatically parse the XML into an array
+                	// Will have to set about it the old fashioned way
+                	//
+                	var xmlDoc =  Y.DataType.XML.parse(o.responseText);
+                	var cometDetails = xmlDoc.getElementsByTagName('plaintext');
+                	var imageDetails = xmlDoc.getElementsByTagName('img');
+                	var cometDetailsHTML = Y.one('#current_details');
                 	
-                	var pods = xmlDoc.getElementsByTagName('plaintext');
-                	var cometDetails = Y.one('#current_details');
+                	// wolfram alpha XML is very badly formed and not very intuitive
+                	// so with little time for a fancy solution, I'll extract the bits I need manually
+                	//
+                	var locationDetails = cometDetails[0].textContent;
+                	var physicalDetails = cometDetails[1].textContent;
+                	var discoveryDetails = cometDetails[2].textContent;
+                	var positionDetails = cometDetails[4].textContent;
+                	var nearSkyObjects = cometDetails[5].textContent;
+                	var riseSetDetails = cometDetails[8].textContent;
                 	
-                	cometDetails.setHTML('<h3>Current Comet Details</h3>' + '<p>' + pods[2].textContent + '</p>');
-                	cometDetails.append('<p>'+pods[3].textContent+'</p>');
-                	cometDetails.append('<p>'+pods[4].textContent+'</p>');
                 	
+                	
+                	
+                	//locationDetails = locationDetails.replace('|', ' ');
+                	physicalDetails = physicalDetails.split('|');
+                	
+                	//physicalDetails = physicalDetails.replace('|', ' ');
+                	positionDetails = positionDetails.replace('|', ' '); // Remove vertical bars from output     	
+                	discoveryDetails = discoveryDetails.replace('|', ' ');
+                	nearSkyObjects = nearSkyObjects.replace('|', ' ');
+                	
+                	cometDetailsHTML.append('<h3>Current Comet Details</h3>');
+                	cometDetailsHTML.append('<h7>Downloaded from Wolfram Alpha!</h7>');
+                	
+                	cometDetailsHTML.append('<ul>');
+                	for(var i = 0; i < imageDetails.length; i++)
+               		{
+                		cometDetailsHTML.append('<li><img src ="'+imageDetails[i].attributes[0].nodeValue+'"/></li>');
+               		}
+                	cometDetailsHTML.append('</ul>');
+                	
+                	
+                	/*cometDetailsHTML.append('<img src ="'+imageDetails[0].attributes[0].nodeValue+'"/>');
+                	cometDetailsHTML.append('<img src ="'+imageDetails[1].attributes[0].nodeValue+'"/>');
+                	cometDetailsHTML.append('<img src ="'+imageDetails[2].attributes[0].nodeValue+'"/>');
+                	cometDetailsHTML.append('<img src ="'+imageDetails[3].attributes[0].nodeValue+'"/>');
+                	cometDetailsHTML.append('<img src ="'+imageDetails[4].attributes[0].nodeValue+'"/>');
+                	cometDetailsHTML.append('<img src ="'+imageDetails[5].attributes[0].nodeValue+'"/>');  */
                 },
                 failure:function(id, o) 
                 {
