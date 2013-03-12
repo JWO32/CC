@@ -19,19 +19,42 @@ import sun.misc.IOUtils;
 /**
  * Servlet implementation class XMLFetch
  */
-public class XMLFetch extends HttpServlet {
+public class FetchFeed extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public XMLFetch() 
+    public FetchFeed() 
     {
         super();
         // TODO Auto-generated constructor stub
     }
     
-    private String getXMLFeed(String requiredURL) throws java.net.MalformedURLException, IOException
+    
+    private String getYahooPipesFeed(String requiredURL) throws java.net.MalformedURLException, IOException
+    {
+    	StringBuffer json = new StringBuffer();
+    	String input = new String();
+    	
+    	URL yhPipeURL = new URL(requiredURL);
+    	
+    	URLConnection connect = yhPipeURL.openConnection();
+    	
+    	InputStream is = connect.getInputStream();
+    	
+    	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+    	
+    	while((input = br.readLine()) != null)
+    	{
+    		json.append(input);
+    	}
+    	
+    	return json.toString();
+    }
+    
+    
+    private String getWAXMLFeed(String requiredURL) throws java.net.MalformedURLException, IOException
     {
     	StringBuffer xml = new StringBuffer();
     	String input ="";
@@ -62,19 +85,39 @@ public class XMLFetch extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, java.net.MalformedURLException
 	{
-		String webServiceURL = "http://api.wolframalpha.com/v2/query?input=comet%20PANSTARRS%20from%20dundee%20scotland&appid=8YE6TK-X5TAH287JP&format=image,plaintext";
+		//For reference: 
+		//
+		String wolframAlphaURL = "http://api.wolframalpha.com/v2/query?input=comet%20PANSTARRS%20from%20dundee%20scotland&appid=8YE6TK-X5TAH287JP&format=image,plaintext";
+		String yhPipesURL = "http://pipes.yahoo.com/pipes/pipe.run?_id=d20aa663c73ce81554c1222ce963ff68&_render=json";
+		//
+		String returnedValue;
+		String path = request.getRequestURI();
+		String[] pathElements = path.split("/");
 		
-		String returnedXML;
+		String serviceChoice = pathElements[3];
 		
-		returnedXML = getXMLFeed(webServiceURL);
-	
-		response.setContentType("text/xml");
+		if(serviceChoice.equals("waCometDetails"))
+		{
+			returnedValue = getWAXMLFeed(wolframAlphaURL);
+			
+			response.setContentType("text/xml");
+			
+			response.setStatus(HttpServletResponse.SC_OK);
+			
+			PrintWriter output = response.getWriter();
+			
+			output.write(returnedValue);
+		}else if(serviceChoice.equals("ypCometNews"))
+		{
+			returnedValue = getYahooPipesFeed(yhPipesURL);
+			
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("application/json");
+			PrintWriter output = response.getWriter();
+			output.write(returnedValue);
+		}
 		
-		response.setStatus(HttpServletResponse.SC_OK);
 		
-		PrintWriter output = response.getWriter();
-		
-		output.write(returnedXML);
 
 	}
 

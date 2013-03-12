@@ -11,12 +11,12 @@
   </welcome-file-list>
   <servlet>
     <description></description>
-    <display-name>XMLFetch</display-name>
-    <servlet-name>XMLFetch</servlet-name>
-    <servlet-class>uk.ac.dundee.jamesoliver.RemoteDataFetch.XMLFetch</servlet-class>
+    <display-name>FetchFeed</display-name>
+    <servlet-name>FetchFeed</servlet-name>
+    <servlet-class>uk.ac.dundee.jamesoliver.RemoteDataFetch.FetchFeed</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>XMLFetch</servlet-name>
-    <url-pattern>/XMLFetch/*</url-pattern>
+    <servlet-name>FetchFeed</servlet-name>
+    <url-pattern>/FetchFeed/*</url-pattern>
   </servlet-mapping>
 </web-app>
