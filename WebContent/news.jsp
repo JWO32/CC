@@ -4,8 +4,8 @@
 <script src="http://yui.yahooapis.com/3.8.1/build/yui/yui-min.js"></script>
 
 </head>
-<body>
 
+<body>
 <script type="text/javascript">
 
 YUI().use("io-base", "json-parse", "data-schema-json", "node", function (Y) 

@@ -35,8 +35,7 @@ var getLocation = function()
 		navigator.geolocation.getCurrentPosition(getSkyMap);	
 	}else
 	{
-		//Geolocation not available
-		// Put something in the web page!
+		alert('Unable to your location: comet sky map unavailable');
 	}
 };
 
@@ -51,7 +50,7 @@ var getSkyMap = function(position)
 	var latDegrees = lat.slice(0,2);
 	var latMinutes = lat.slice(3,4);
 	
-	var longDegrees = longi.slice(0,3);
+	var longDegrees = longi.slice(0,2);
 	var longMinutes = longi.slice(3,4);
 	
 	var ysLink = 'http://www.fourmilab.ch/cgi-bin/Yourhorizon?date=1&utc=2013%2F03%2F12+17%3A55%3A01&jd=2450859.37154&azimuth=V&azideg=250+&fov=55%B0&lat='+latDegrees+'%B0'+latMinutes+'%22&ns=North&lon='+longDegrees+'%B0'+longMinutes+'%22&ew=West&moonp=on&deep=on&deepm=3.0&consto=on&constn=on&limag=5.5&starn=on&starnm=3.0&starb=on&starbm=3.5&showmb=-1.5&showmd=6.0&terrain=on&terrough=0.7&scenery=on&imgsize=512&dynimg=y&fontscale=1.0&scheme=0&elements=+++C%2F2011+L4+%28PANSTARRS%29++++++Orbital+elements+by+G.+V.+Williams%0D%0AEpoch+2013+Mar.+9.0+TT+%3D+JDT+2456360.5++++++++++++++++++++++++++++++++++++++++++%0D%0AT+2013+Mar.+10.16839+TT++++++++++++++++++++++++++++++%0D%0Aq+++0.3015433++++++++++++%282000.0%29++++++++++++P+++++++++++++++Q++++++++++++++++++%0D%0Az++-0.0000420++++++Peri.++333.65160+++++%2B0.41006823+++++%2B0.10046864+++++++++++++%0D%0A+%2B%2F-0.0000009++++++Node++++65.66583+++++%2B0.90783024+++++%2B0.05059039+++++++++++++%0D%0Ae+++1.0000127++++++Incl.+++84.20692+++++-0.08768299+++++%2B0.99365319+++++++++++++%0D%0AFrom+1218+observations+2011+May+21-2012+Oct.+1%2C+mean+residual+0%22.4.+++++';
@@ -60,6 +59,7 @@ var getSkyMap = function(position)
 	{
 		var skyMap = Y.one('#comet_chart');
 		skyMap.append('<img src = "'+ysLink+'"/>');
+		skyMap.append('<p>Latitude: '+latDegrees+' Longitude: '+longDegrees);
 		
 	});
 };
