@@ -1,11 +1,14 @@
-<!doctype html>
-<head>
-<title>Comet News!</title>
-<script src="http://yui.yahooapis.com/3.8.1/build/yui/yui-min.js"></script>
+<jsp:include page="inc/header.jsp" />
 
-</head>
+<div id="header">
+	<div id="title_banner">
+		<h1>Comet Chaser!</h1>
+	</div>
+	<div id="menutabs">
+	<jsp:include page="inc/tab-menu.jsp" />
+	</div>
+</div>
 
-<body>
 <script type="text/javascript">
 
 YUI().use("io-base", "json-parse", "data-schema-json", "node", function (Y) 
@@ -28,7 +31,7 @@ YUI().use("io-base", "json-parse", "data-schema-json", "node", function (Y)
 						cometNews = Y.JSON.parse(r.responseText);
 						
 						var itemList = cometNews.value.items;
-						newsHTML = Y.one('#News_Stories');
+						newsHTML = Y.one('#news_stories');
 						
 						for(var i = 0; i < itemList.length; i++)
 						{
@@ -47,28 +50,25 @@ YUI().use("io-base", "json-parse", "data-schema-json", "node", function (Y)
 				
 				failure: function()
 				{
-					
+					alert('Unable to display news');
 				}
 			
-			}
-		
+			}		
 	});
 	
 });
 
 </script>
 
-<div id="Main_Content">
+<div id="main_content">
 <h1>Comet PANSTARRS Latest News</h1>
 <p>A collection of news stories from a variety of sources!</p>
 
-<div id="News_Stories">
-
+<div id="news_stories">
 
 
 </div>
 
 </div>
 
-</body>
-</html>
+<jsp:include page="inc/footer.jsp" />

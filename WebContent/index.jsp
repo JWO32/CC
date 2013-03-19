@@ -1,16 +1,11 @@
-<!doctype html>
-<head>
-<title>Comet Chaser!</title>
-<script src="http://yui.yahooapis.com/3.8.1/build/yui/yui-min.js"></script>
+<jsp:include page="inc/header.jsp" />
 
-</head>
-<body>
 <div id="header">
 	<div id="title_banner">
-		<h1>Comet Chaser!</h1>
+	<h1>Comet Chaser!</h1>
 	</div>
 	<div id="menutabs">
-
+		<jsp:include page="inc/tab-menu.jsp" />
 	</div>
 </div>
 
@@ -21,10 +16,6 @@
 
 <p>You can use Comet Chaser to help you find where to look and see rare event and join our community of observers to shout out what you see!</p>
 
-
-<div id='star_chart'>
-<iframe width="500" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://lcogt.net/virtualsky/embed/?longitude=2.30&latitude=56.30&projection=equirectangular&meteorshowers=true&showstarlabels=true&live=true&az=260" allowTransparency="true"></iframe>
-</div>
 
 <script type="text/javascript">
 
@@ -53,13 +44,15 @@ var getSkyMap = function(position)
 	var longDegrees = longi.slice(0,2);
 	var longMinutes = longi.slice(3,4);
 	
-	var ysLink = 'http://www.fourmilab.ch/cgi-bin/Yourhorizon?date=1&azimuth=V&azideg=250+&fov=55%B0&lat='+latDegrees+'%B0'+latMinutes+'%22&ns=North&lon='+longDegrees+'%B0'+longMinutes+'%22&ew=West&moonp=on&deep=on&deepm=3.0&consto=on&constn=on&limag=5.5&starn=on&starnm=3.0&starb=on&starbm=3.5&showmb=-1.5&showmd=6.0&terrain=on&terrough=0.7&scenery=on&imgsize=512&dynimg=y&fontscale=1.0&scheme=0&elements=+++C%2F2011+L4+%28PANSTARRS%29++++++Orbital+elements+by+G.+V.+Williams%0D%0AEpoch+2013+Mar.+9.0+TT+%3D+JDT+2456360.5++++++++++++++++++++++++++++++++++++++++++%0D%0AT+2013+Mar.+10.16839+TT++++++++++++++++++++++++++++++%0D%0Aq+++0.3015433++++++++++++%282000.0%29++++++++++++P+++++++++++++++Q++++++++++++++++++%0D%0Az++-0.0000420++++++Peri.++333.65160+++++%2B0.41006823+++++%2B0.10046864+++++++++++++%0D%0A+%2B%2F-0.0000009++++++Node++++65.66583+++++%2B0.90783024+++++%2B0.05059039+++++++++++++%0D%0Ae+++1.0000127++++++Incl.+++84.20692+++++-0.08768299+++++%2B0.99365319+++++++++++++%0D%0AFrom+1218+observations+2011+May+21-2012+Oct.+1%2C+mean+residual+0%22.4.+++++';
+	
+	// &utc=2013%2F03%2F12+17%3A55%3A01&jd=2450859.37154
+	var ysLink = 'http://www.fourmilab.ch/cgi-bin/Yourhorizon?date=1&azimuth=V&azideg=250+&fov=55%B0&lat='+latDegrees+'%B0'+latMinutes+'%22&ns=North&lon='+longDegrees+'%B0'+longMinutes+'%22&ew=West&moonp=on&deep=on&deepm=3.0&consto=on&constn=on&limag=5.5&starn=on&starnm=3.0&starb=on&starbm=3.5&showmb=-1.5&showmd=6.0&terrain=on&terrough=0.2&scenery=on&imgsize=512&dynimg=y&fontscale=1.0&scheme=0&elements=+++C%2F2011+L4+%28PANSTARRS%29++++++Orbital+elements+by+G.+V.+Williams%0D%0AEpoch+2013+Mar.+9.0+TT+%3D+JDT+2456360.5++++++++++++++++++++++++++++++++++++++++++%0D%0AT+2013+Mar.+10.16839+TT++++++++++++++++++++++++++++++%0D%0Aq+++0.3015433++++++++++++%282000.0%29++++++++++++P+++++++++++++++Q++++++++++++++++++%0D%0Az++-0.0000420++++++Peri.++333.65160+++++%2B0.41006823+++++%2B0.10046864+++++++++++++%0D%0A+%2B%2F-0.0000009++++++Node++++65.66583+++++%2B0.90783024+++++%2B0.05059039+++++++++++++%0D%0Ae+++1.0000127++++++Incl.+++84.20692+++++-0.08768299+++++%2B0.99365319+++++++++++++%0D%0AFrom+1218+observations+2011+May+21-2012+Oct.+1%2C+mean+residual+0%22.4.+++++';
 
 	YUI().use("node", function(Y)
 	{
 		var skyMap = Y.one('#comet_chart');
 		skyMap.append('<img src = "'+ysLink+'"/>');
-		skyMap.append('<p>Latitude: '+latDegrees+' Longitude: '+longDegrees);
+		skyMap.append('<p>This map is for Latitude: '+latDegrees+' Longitude: '+longDegrees);
 		
 	});
 };
@@ -88,34 +81,39 @@ YUI().use("io-base", "datasource-get", "datatype-xml", "dataschema-xml", "node",
                 	
                 	cometDetailsHTML.append('<h3>Current Comet Details</h3>');
                 	cometDetailsHTML.append('<h7>Downloaded from Wolfram Alpha!</h7>');
-                	cometDetailsHTML.append('<ul>');
+                	cometDetailsHTML.append('<table>');
                 	for(var i = 0; i < imageDetails.length; i++)
                		{
-                		cometDetailsHTML.append('<li><img src ="'+imageDetails[i].attributes[0].nodeValue+'"/></li>');
+                		// Very ugly hack to exlcude some of the images we don't need
+                		//
+                		if(i != 2 && i != 3 && i!=5 && i!=6 && i!= 7 && i!=10)
+                		{
+                			cometDetailsHTML.append('<tr>');
+                			cometDetailsHTML.append('<td><img src ="'+imageDetails[i].attributes[0].nodeValue+'"/></td>');
+	                		cometDetailsHTML.append('</tr>');
+                		}
                		}
-                	cometDetailsHTML.append('</ul>');
+                	cometDetailsHTML.append('</table>');
                 },
                 failure:function(id, o) 
                 {
-                	alert('Failure: '+e.response);
+                	alert('Error fetching data from Wolfram Alpha '+e.response);
                 }
             }
         }
     );	
 });
-
 </script>
 
 <div id="current_details">
 
-
 </div>
 
 <div id="comet_chart">
-<h3>Here is a chart to help you find the comet!</h3>
-<p>This map shows the western profile from your current location at the current time.  Look out for the comet symbol in the evenings, then you can head out and see PANSTARRS</p>
+<h3>Comet finder chart</h3>
+<p>This map shows the western profile from your current location at the current time.  Look out for the comet symbol in the evenings, then you can head out and see PANSTARRS.</p><p> Generated by <a href="http://www.fourmilab.ch/yoursky/">Your Sky</a>.</p>
 </div>
 
 </div>
-</body>
-</html>
+
+<jsp:include page="inc/footer.jsp" />

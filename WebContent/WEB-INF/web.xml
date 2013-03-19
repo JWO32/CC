@@ -19,4 +19,14 @@
     <servlet-name>FetchFeed</servlet-name>
     <url-pattern>/FetchFeed/*</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>postcomment</display-name>
+    <servlet-name>postcomment</servlet-name>
+    <servlet-class>uk.ac.dundee.yimengzheng.postcomment.postcomment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>postcomment</servlet-name>
+    <url-pattern>/postcomment/*</url-pattern>
+  </servlet-mapping>
 </web-app>

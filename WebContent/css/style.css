@@ -1,0 +1,162 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	width:100%;
+	
+	background:url(../star.jpg); repeat-x:repeat; repeat-y:repeat;
+	font-family: tahoma, verdana, helvetica, sans-serif;
+	font-size: 14pt;
+	color: #000000;
+}
+
+#header
+{
+	font-size: 100%;
+	width: 60%;
+	margin: 0 auto;
+	clear: both;
+}
+
+#menutabs
+{
+	background-color: #85FF0A;
+	margin: 0 auto;
+	width: 100%;
+	font-size: 100%;
+	clear: both;
+}
+
+#menutabs li
+{
+	list-style-type: none;
+	display: inline;
+	font-size: 85%;
+	color: #FFFFFF;
+	font-weight: bold;
+	margin: 0;
+	padding-right: 1em;
+}
+
+#menutabs li a:hover
+{
+	color: #DDDDDD;
+}
+
+#menutabs li a:visited
+{
+	color: #EE6600;
+}
+
+#title_banner
+{
+	width: 40%;
+	margin: 0 auto;
+	
+	color: #FFFFFF;
+}
+
+#twitter_results
+{ 
+	width: 90%;
+	margin-left: 0.5%;
+	margin-right:0.5%; 
+	border: 1px solid gray; 
+	padding: 5px; 
+	height: 100%; 
+	overflow: auto; 
+}
+
+#title_banner li
+{
+	
+	
+}
+
+
+#main_content
+{
+	width: 60%;
+	margin: 0 auto;
+	background-color: #EEEEEE;
+	padding:5px;
+}
+
+#main_content h1
+{
+	font-size: 100%;
+}
+
+#footer
+{
+	width: 60%;
+	font-size: 90%;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin: 0 auto;
+	height: 50px;
+	padding: 0;
+	clear: both;
+}
+
+#star_chart
+{
+	width: 100%;
+	margin: auto;
+}
+
+#current_details
+{
+	width: 60%;
+	margin: 0 auto;
+}
+
+#current_details img
+{
+	align: center;
+}
+
+#current_details ul
+{
+	width: 50%;
+	margin: 0 auto;
+	
+}
+
+#current_details li
+{
+	list-style-type: none;
+}
+
+#comet_chart
+{
+	margin: 0 auto;
+}
+
+#comet_chart img
+{
+	margin: 0 auto;
+}
+
+#news_stories
+{
+	margin: 5px;
+	padding: 3px;
+}
+
+#news_item
+{
+	margin: 5px;
+	padding: 3px;
+	border: solid 1px #000000;
+}
+
+#map {
+	width: 800px;
+    height: 600px;
+		}
+#comment{
+   
+    
+    
+}
